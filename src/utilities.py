@@ -1,8 +1,11 @@
-# various utilities to be used throughout the repository 
 import pandas as pd
+# various utilities to be used throughout the repository 
+
+
+# GET_FLIPPED_DATA
 # takes a dataframe with columns [location, team1, team2, score1, score2, result]
 # and returns a dataframe with the teams & scores flipped and locations & results switched
-def return_flipped_data(df):
+def get_flipped_data(df):
     
     flipped_data = df.copy()
 
@@ -20,3 +23,10 @@ def return_flipped_data(df):
 
 
 
+# GET_FLIPPED_DATA_APPENDED
+# takes a dataframe with columns [location, team1, team2, score1, score2, result]
+# and returns a dataframe with the original data as well as 
+# appended entries with the teams & scores flipped and locations & results switched
+def get_flipped_data_appended(df):
+
+    return pd.concat([df, get_flipped_data(df)])
