@@ -30,3 +30,38 @@ def get_flipped_data(df):
 def get_flipped_data_appended(df):
 
     return pd.concat([df, get_flipped_data(df)])
+
+
+
+# GET_FILTERED_DATA
+# takes a dataframe with columns [season, team1] and returns
+# a dataframe that is filtered by the team(s) and season(s)
+#
+# you may pass season as a single int or a list of int
+# you may pass teams as a single str or a list of str
+def get_filtered_data(df, seasons=None, teams=None):
+    
+    # filter the data
+    filtered_df = df.copy()
+
+    if(type(teams) == str):
+        temp = []
+        temp.append(teams)
+        teams = temp
+
+    if(type(seasons) == int):
+        temp = []
+        temp.append(seasons)
+        seasons = temp
+
+    if(type(seasons) == list):
+        filtered_df = filtered_df[filtered_df['season'].isin(seasons)]
+
+    if(type(teams) == list):
+        filtered_df = filtered_df[filtered_df['team1'].isin(teams)]
+
+    return filtered_df
+    
+
+
+    
