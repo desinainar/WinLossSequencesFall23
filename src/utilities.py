@@ -67,9 +67,7 @@ def get_filtered_data(df, seasons=None, teams=None):
 
 # GET_WINRATE
 # takes a dataframe with columns [season, team1] and returns a dataframe with
-# columns [team, season, winrate] which act as youd expect. you likely want to run 
-# get_flipped_data_appended before running this function, as that will yield
-# full season winrate instead of home/away winrate
+# columns [team, season, winrate] which act as youd expect
 #
 # optional modified boolean if you desire a modified winrate
 def get_winrate(df, seasons, teams=None, modified=False):
