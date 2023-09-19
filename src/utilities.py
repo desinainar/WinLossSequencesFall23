@@ -1,3 +1,5 @@
+import warnings
+warnings.simplefilter(action='ignore', category=FutureWarning)
 import pandas as pd
 # various utilities to be used throughout the repository 
 
@@ -60,52 +62,46 @@ def get_filtered_data(df, seasons=None, teams=None):
     if(type(teams) == list):
         filtered_df = filtered_df[filtered_df['team1'].isin(teams)]
 
-    # note that the returned dataframe still calls has the column as 'team1'
+    # note that the returned dataframe still uses the column name 'team1'
     return filtered_df
 
 
 
 # GET_WINRATE
 # takes a dataframe with columns [season, team1] and returns a dataframe with
-# columns [team, season, winrate] which act as youd expect
+# columns [season, team, winrate] which act as youd expect
 #
 # optional modified boolean if you desire a modified winrate
-def get_winrate(df, seasons, teams=None, modified=False):
-
-    seasons_dataframes = []
-
-    if(type(seasons) == int):
-        seasons_dataframes.append(get_filtered_data(df, seasons=seasons, teams=teams))
-    else:
-        for season in seasons:
-            seasons_dataframes.append(get_filtered_data(df, season, teams=teams))
+def get_winrate(df, seasons=None, teams=None, modified=False):
     
-    final_dataframe = pd.DataFrame(columns=['team', 'season', 'winrate'])
-    
-    for data in seasons_dataframes:
+    to_return = pd.DataFrame(columns=['season', 'team', 'winrate'])
+    years = get_filtered_data(df, seasons, teams)['season'].unique()
+    seasonal_dataframes = {}
+
+    # i dont like this loop - matthew
+    for year in years:
+        # the unique() function returns a numpy int, perhaps adjust get_filtered_data
+        # to account for this, to avoid casting here and elsewhere
+        seasonal_dataframes[year] = get_filtered_data(df, seasons=int(year), teams=teams)
+
+    to_append = []
+
+    for year in years:
         team_to_wins = {}
         team_to_losses = {}
-        season = data.iloc[0]['season']
 
-        for ind in data.index:
-            if(data['result'][ind] == 1):
-                team_to_wins[data['team1'][ind]] = team_to_wins.get(data['team1'][ind], 0) + 1
-            if(data['result'][ind] == 0):
-                team_to_losses[data['team1'][ind]] = team_to_losses.get(data['team1'][ind], 0) + 1
-
+        for index, row in seasonal_dataframes[year].iterrows():
+            if(row['result'] == 0):
+                team_to_losses[row['team1']] = team_to_losses.get(row['team1'], 0) + 1
+            if(row['result'] == 1):
+                team_to_wins[row['team1']] = team_to_wins.get(row['team1'], 0) + 1
+        
         teams = set(team_to_wins.keys()).union(set(team_to_losses.keys()))
-       
-       
         for team in teams:
-            new_row = {'team': team, 'season': season, 
-                'winrate': (team_to_wins[team] + int(modified)) / (team_to_wins[team] + team_to_losses[team] + int(modified) * 2)}
-            to_append = pd.DataFrame(new_row, index=[0])
-            final_dataframe = pd.concat([final_dataframe, to_append],ignore_index=True)
-            
-    return final_dataframe
+            to_append = {'season': year, 'team': team, 
+                         'winrate': (team_to_wins.get(team, 0) + int(modified)) / 
+                         (team_to_losses.get(team, 0) + team_to_wins.get(team, 0) + (2 * int(modified)))}
+            to_return = to_return.append(to_append, ignore_index=True)
 
-#data = pd.read_csv('../data/processed_data/generic_mlb_data.csv')
-#print(get_winrate(data, 2021, modified=True).head())
-
-
+    return to_return
     
