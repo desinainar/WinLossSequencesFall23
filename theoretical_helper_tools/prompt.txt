@@ -1,0 +1,35 @@
+i want to use python to write a program.
+
+I am simulating the games between many teams.
+
+I want to let there be a Game class.
+
+Game class includes instance variables of 
+1. Team array: recording the teams joining the games.
+2. number of teams
+3. an array stores the winning rate of each team
+4. an array stores the number of win of each team
+
+etc...
+
+i finally need to construct a matrix.
+
+
+assume, each two teams will play one game. e.g. 4 teams will play 6 games
+each row is one game.
+so in this case i will have 6 rows, like, A vs B, A vs C.... C vs D
+
+for simulation, lets assume the results, before we filling the matrix. For example, in a game of 4 teams, we can let A wins all 3 games, B wins over C,D, C wins over D, and D lose all.
+
+columns includes, :
+1. race result(who wins)
+2. the accumulative win rate of team A
+3. the accumulative win rate of team B
+4. the accumulative win rate of team C
+5. the accumulative win rate of team D
+6. the prediction of this current game, base on the winning rate.
+
+
+finally, for this game season, i want to know how my prediction is. i call it upset rate. i am always predicting the team with better historical record wins, and this team is favorite. a team with lower win rate is underdog. if in a game, the underdog wins,(disobey our prediction ) we prediction failed.
+
+upset rate of a season = number of failed prediction , over, number of all games.
