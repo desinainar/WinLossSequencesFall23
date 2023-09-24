@@ -10,7 +10,7 @@ def get_flipped_data(df):
     flipped_data = df.copy()
 
     # reassign who is team1
-    flipped_data.rename(columns={'team1': 'team2', 'team2': 'team1', 'score1': 'score2', 'score2': 'score1'}, inplace=True)
+    flipped_data = flipped_data.rename(columns={'team1': 'team2', 'team2': 'team1', 'score1': 'score2', 'score2': 'score1'}, inplace=True)
 
     # these lambda functions simply change location and result as expected (home becomes away, loss becomes win, etc.)
     flipped_data['location'] = flipped_data['location'].apply(lambda x: 'A' if x == 'H' else 'H' if x == 'A' else 'N')
