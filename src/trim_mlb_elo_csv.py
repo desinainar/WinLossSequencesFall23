@@ -22,7 +22,7 @@ def interpret_score_difference(diff):
 # result: 1 if team1 wins, 0 if team2 wins, 0.5 if tie
 
 # open .csv into 'data' variable
-data = pd.read_csv('data/raw_data/mlb_elo.csv')
+data = pd.read_csv('data/raw_data/mlb_elo_original.csv')
 
 # remove all games that haven't been played yet
 trimmed_data = data[data['rating1_post'].notnull()]
