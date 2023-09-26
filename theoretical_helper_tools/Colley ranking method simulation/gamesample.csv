@@ -1,0 +1,7 @@
+TeamA,TeamB,win
+TeamA,TeamC,lose
+TeamB,TeamC,win
+TeamB,TeamD,lose
+TeamD,TeamE,win
+TeamC,TeamE,lose
+TeamE,TeamA,win
