@@ -101,7 +101,37 @@ def get_winrate(df, seasons=None, teams=None, adjusted=True):
             to_append = {'season': year, 'team': team, 
                          'winrate': (team_to_wins.get(team, 0) + int(adjusted)) / 
                          (team_to_losses.get(team, 0) + team_to_wins.get(team, 0) + (2 * int(adjusted)))}
-            to_return = to_return.append(to_append, ignore_index=True)
+            to_return = to_return._append(to_append, ignore_index=True)
 
     return to_return
 
+def get_cumulative_winrate(df, season, team, date):
+    filtered_data = get_filtered_data(df, seasons=season, teams=team)
+    filtered_data = filtered_data.loc[filtered_data['date'] <= date]
+    return get_winrate(filtered_data)
+
+def get_cumulative_winrate_sequence(df, season, team, date=None):
+    if(date == None):
+        # this is a bit of a hack but its foolproof for about 8000 more years
+        date = '9999-12-31'
+        filtered_data = get_filtered_data(df, seasons=season, teams=team)
+        
+        #redundant line copied over from get_cumulative_winrate, maybe can be changed for effeciency
+        filtered_data = filtered_data.loc[filtered_data['date'] <= date]
+
+        date_to_rate = {}
+
+        for d in filtered_data['date'].unique():
+            date_to_rate[str(d)] = float(get_cumulative_winrate(df, season, team, d)['winrate'])
+
+        to_return = pd.DataFrame(columns=['date', 'winrate'])
+
+        #wildly inefficient reiteration over the data but it works
+        for k in date_to_rate.keys():
+            to_dataframe = {}
+            to_dataframe['date'] = k
+            to_dataframe['winrate'] = date_to_rate[k]
+            to_return = to_return._append(to_dataframe, ignore_index=True)
+
+        return to_return
+    
