@@ -71,8 +71,8 @@ def get_filtered_data(df, seasons=None, teams=None):
 # takes a dataframe with columns [season, team1] and returns a dataframe with
 # columns [season, team, winrate] which act as youd expect
 #
-# optional modified boolean if you desire a modified winrate
-def get_winrate(df, seasons=None, teams=None, modified=False):
+# optional adjusted boolean if you desire a adjusted winrate
+def get_winrate(df, seasons=None, teams=None, adjusted=True):
     
     to_return = pd.DataFrame(columns=['season', 'team', 'winrate'])
     years = get_filtered_data(df, seasons, teams)['season'].unique()
@@ -99,9 +99,9 @@ def get_winrate(df, seasons=None, teams=None, modified=False):
         teams = set(team_to_wins.keys()).union(set(team_to_losses.keys()))
         for team in teams:
             to_append = {'season': year, 'team': team, 
-                         'winrate': (team_to_wins.get(team, 0) + int(modified)) / 
-                         (team_to_losses.get(team, 0) + team_to_wins.get(team, 0) + (2 * int(modified)))}
+                         'winrate': (team_to_wins.get(team, 0) + int(adjusted)) / 
+                         (team_to_losses.get(team, 0) + team_to_wins.get(team, 0) + (2 * int(adjusted)))}
             to_return = to_return.append(to_append, ignore_index=True)
 
     return to_return
-    
+
