@@ -11,7 +11,7 @@ def get_flipped_data(df):
     
     flipped_data = df.copy()
 
-    # reassign who is team1
+    # reassign who is team1 
     flipped_data.rename(columns={'team1': 'team2', 'team2': 'team1', 'score1': 'score2', 'score2': 'score1'}, inplace=True)
 
     # these lambda functions simply change location and result as expected (home becomes away, loss becomes win, etc.)
@@ -105,10 +105,12 @@ def get_winrate(df, seasons=None, teams=None, adjusted=True):
 
     return to_return
 
+
 def get_cumulative_winrate(df, season, team, date):
     filtered_data = get_filtered_data(df, seasons=season, teams=team)
     filtered_data = filtered_data.loc[filtered_data['date'] <= date]
     return get_winrate(filtered_data)
+
 
 def get_cumulative_winrate_sequence(df, season, team, date=None):
     if(date == None):
@@ -134,4 +136,26 @@ def get_cumulative_winrate_sequence(df, season, team, date=None):
             to_return = to_return._append(to_dataframe, ignore_index=True)
 
         return to_return
+
+
+def get_prediction_metric_accuracy(df, prob_column_name=None):
     
+    # if no column name specified, assume it is last column
+    if prob_column_name == None:
+        prob_column = df.iloc[:,-1:]
+    else:
+        prob_column = df[prob_column_name]
+
+    correctness = []
+
+    for index in df.index:
+        if(prob_column.iloc[:, 0][index] > 0.5):
+            correctness.append(df['result'][index])
+        elif(prob_column.iloc[:,0][index] < 0.5):
+            correctness.append(abs(df['result'][index] - 1))
+        else:
+            correctness.append(0.5)
+
+    to_return = df.copy()
+    to_return['accuracy'] = correctness
+    return to_return
