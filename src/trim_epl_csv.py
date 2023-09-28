@@ -41,7 +41,7 @@ trimmed_data.loc[trimmed_data['Location'] != '0', 'Location'] = 'H'
 
 # split date and time
 trimmed_data[['Date', 'Time']] = trimmed_data['Date'].str.split(' ', expand=True)
-
+trimmed_data['Date'] = trimmed_data['Date'].str.replace('/', '-')
 trimmed_data.insert(2, 'season', '2023')
 
 # rename teams to abbreviations
