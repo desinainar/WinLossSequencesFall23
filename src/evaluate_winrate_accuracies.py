@@ -11,6 +11,8 @@ nhl_df = pd.read_csv('../data/processed_data/nhl/generic_nhl_data_flipped.csv')
 nfl_df = pd.read_csv('../data/processed_data/nfl_historical/generic_nfl_data_flipped.csv')
 nba_df = pd.read_csv('../data/processed_data/nba/generic_nba_data_flipped.csv')
 
+team_season_pair_to_winrate = {}
+
 def initialize_dictionary(df, dictionary):
     for index in df.index:
         dictionary[ (df['team1'][index], df['season'][index]) ] = df['winrate'][index]
