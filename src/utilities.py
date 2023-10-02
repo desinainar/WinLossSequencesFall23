@@ -1,14 +1,16 @@
 import warnings
-warnings.simplefilter(action='ignore', category=FutureWarning)
+warnings.simplefilter(action='ignore', category=FutureWarning) # fix usage of _append before we can remove this
 import pandas as pd
-# various utilities to be used throughout the repository 
 
-
-# GET_FLIPPED_DATA
-# takes a dataframe with columns [location, team1, team2, score1, score2, result]
-# and returns a dataframe with the teams & scores flipped and locations & results switched
 def get_flipped_data(df):
-    
+    """
+    get_flipped_data takes a dataframe and returns a dataframe with ONLY 'flipped' entries
+
+    Params:
+    df: a pandas dataframe with columns [location, team1, team2, score1, score2, result]
+
+    Returns: a pandas dataframe with flipped entries  
+    """
     flipped_data = df.copy()
 
     # reassign who is team1 
@@ -24,25 +26,29 @@ def get_flipped_data(df):
     return flipped_data
 
 
-
-# GET_FLIPPED_DATA_APPENDED
-# takes a dataframe with columns [location, team1, team2, score1, score2, result]
-# and returns a dataframe with the original data as well as 
-# appended entries with the teams & scores flipped and locations & results switched
 def get_flipped_data_appended(df):
+    """
+    get_flipped_data_appended takes a dataframe and returns a dataframe with BOTH original and flipped entries
 
+    Params:
+    df: a pandas dataframe with columns [location, team1, team2, score1, score2, result]
+    
+    Returns: a pandas dataframe with both original and flipped entries 
+    """
     return pd.concat([df, get_flipped_data(df)])
 
 
-
-# GET_FILTERED_DATA
-# takes a dataframe with columns [season, team1] and returns
-# a dataframe that is filtered by the team(s) and season(s)
-#
-# you may pass season as a single int or a list of int
-# you may pass teams as a single str or a list of str
 def get_filtered_data(df, seasons=None, teams=None):
-    
+    """
+    get_filtered_data is a function to filter data by season(s) and team(s)
+
+    Params:
+    df: a pandas dataframe with columns [season, team1]
+    seasons: None (all seasons), an int representing a single season, or a list of ints for multiple seasons
+    teams: None (all teams), a string representing a single team abbreviation, or a list of strings for multiple teams
+
+    Returns: a pandas dataframe filtered as desired
+    """
     # filter the data
     filtered_df = df.copy()
 
@@ -66,13 +72,18 @@ def get_filtered_data(df, seasons=None, teams=None):
     return filtered_df
 
 
+def get_season_winrate(df, seasons=None, teams=None, adjusted=True):
+    """
+    get_season_winrate calculates season-long winrates from a dataframe
 
-# GET_WINRATE
-# takes a dataframe with columns [season, team1] and returns a dataframe with
-# columns [season, team, winrate] which act as youd expect
-#
-# optional adjusted boolean if you desire a adjusted winrate
-def get_winrate(df, seasons=None, teams=None, adjusted=True):
+    Params:
+    df: a pandas dataframe with columns [season, team1, result]
+    seasons: None (all seasons), an int representing a single season, or a list of ints for multiple seasons
+    teams: None (all teams), a string representing a single team abbreviation, or a list of strings for multiple teams
+    adjusted: a boolean for changing between adjusted (True) and raw (False) winrate
+
+    Returns: a pandas dataframe with columns [season, team, winrate] 
+    """
     
     to_return = pd.DataFrame(columns=['season', 'team', 'winrate'])
     years = get_filtered_data(df, seasons, teams)['season'].unique()
@@ -107,39 +118,76 @@ def get_winrate(df, seasons=None, teams=None, adjusted=True):
 
 
 def get_cumulative_winrate(df, season, team, date):
+    """
+    get_cumulative_winrate calculates winrates within a season up to a specified date
+
+    TODO: account for double headers
+
+    Params:
+    df: a pandas dataframe containing columns [date, season, team1, result]
+    season: an int representing the desired season
+    team: a string with the desired team's abbreviation
+    date: a string in "YYYY-MM-DD" format which you want to calculate the cumulative winrate up to
+
+    Returns: a pandas dataframe with columns [season, team, winrate, date] and only one entry
+    """
     filtered_data = get_filtered_data(df, seasons=season, teams=team)
     filtered_data = filtered_data.loc[filtered_data['date'] <= date]
-    return get_winrate(filtered_data)
+    filtered_data = get_season_winrate(filtered_data)
+    date_column = [date]
+    filtered_data['date'] = date_column
+    return filtered_data
 
 
 def get_cumulative_winrate_sequence(df, season, team, date=None):
+    """
+    get_cumulative_winrate_sequence calculates a sequence of cumulative winrates up to a specified date
+
+    TODO: account for double headers
+
+    Params:
+    df: a pandas dataframe containing columns [date, season, team1, result]
+    season: an int representing the desired season
+    team: a string with the desired team's abbreviation
+    date: a string in "YYYY-MM-DD" format which you want to calculate the cumulative winrate sequence up to
+
+    Returns: a pandas dataframe with columns [season, team, winrate, date] with entries for played game up to date
+    """
     if(date == None):
         # this is a bit of a hack but its foolproof for about 8000 more years
         date = '9999-12-31'
-        filtered_data = get_filtered_data(df, seasons=season, teams=team)
-        
-        #redundant line copied over from get_cumulative_winrate, maybe can be changed for effeciency
-        filtered_data = filtered_data.loc[filtered_data['date'] <= date]
 
-        date_to_rate = {}
+    filtered_data = get_filtered_data(df, seasons=season, teams=team)
+    #redundant line copied over from get_cumulative_winrate, maybe can be changed for effeciency
+    filtered_data = filtered_data.loc[filtered_data['date'] <= date]
 
-        for d in filtered_data['date'].unique():
-            date_to_rate[str(d)] = float(get_cumulative_winrate(df, season, team, d)['winrate'])
+    date_to_rate = {}
 
-        to_return = pd.DataFrame(columns=['date', 'winrate'])
+    for d in filtered_data['date'].unique():
+        date_to_rate[str(d)] = float(get_cumulative_winrate(df, season, team, d)['winrate'])
 
-        #wildly inefficient reiteration over the data but it works
-        for k in date_to_rate.keys():
-            to_dataframe = {}
-            to_dataframe['date'] = k
-            to_dataframe['winrate'] = date_to_rate[k]
-            to_return = to_return._append(to_dataframe, ignore_index=True)
+    to_return = pd.DataFrame(columns=['date', 'winrate'])
 
-        return to_return
+    #wildly inefficient reiteration over the data but it works
+    for k in date_to_rate.keys():
+        to_dataframe = {}
+        to_dataframe['date'] = k
+        to_dataframe['winrate'] = date_to_rate[k]
+        to_return = to_return._append(to_dataframe, ignore_index=True)
+
+    return to_return.sort_values(by=['date']).reset_index().drop(columns=['index'])
 
 
 def get_prediction_metric_accuracy(df, prob_column_name=None):
-    
+    """
+    get_prediction_metric_accuracy evaluates the accuracy of predictions in predicting results in data
+
+    Params:
+    df: a pandas dataframe containing column [results] AND an arbitraily named column with prediction probabilities
+    prob_column_name: a string with the name of the column in df where prediction probabilties are, or None (rightmost df column)
+
+    Returns: a dataframe with the same entries as df, with an extra "accuracy" column calculated and appended
+    """
     # if no column name specified, assume it is last column
     if prob_column_name == None:
         prob_column = df.iloc[:,-1:]
@@ -149,7 +197,7 @@ def get_prediction_metric_accuracy(df, prob_column_name=None):
     correctness = []
 
     for index in df.index:
-        if(prob_column.iloc[:, 0][index] > 0.5):
+        if(prob_column.iloc[:,0][index] > 0.5):
             correctness.append(df['result'][index])
         elif(prob_column.iloc[:,0][index] < 0.5):
             correctness.append(abs(df['result'][index] - 1))
