@@ -1,7 +1,7 @@
 import utilities
 import pandas as pd
 
-mlb_winrate_dataframe = pd.read_csv('..\data\processed_data\mlb_adjusted_winrates.csv').rename(columns={'team': 'team1'})
+mlb_winrate_dataframe = pd.read_csv('..\data\processed_data\mlb\mlb_adjusted_winrates.csv').rename(columns={'team': 'team1'})
 
 team_season_pair_to_winrate = {}
 
@@ -33,7 +33,7 @@ def get_running_winrate_prediction():
     averages past-season winrate and running tally current-season winrate
     """
 
-#df = pd.read_csv('../data/processed_data/generic_mlb_data_flipped.csv')
+#df = pd.read_csv('../data/processed_data/mlb/generic_mlb_data_flipped.csv')
 #winrate_df = get_foresight_prediction(df)
 #prediction_df = utilities.get_prediction_metric_accuracy(winrate_df)
 #utilities.get_filtered_data(prediction_df, seasons=list(range(1800, 2023))).to_csv('output.csv')
