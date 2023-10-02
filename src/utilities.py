@@ -101,13 +101,18 @@ def get_season_winrate(df, seasons=None, teams=None, adjusted=True):
         team_to_wins = {}
         team_to_losses = {}
 
+        # there are weird edge cases in the NFL where teams exist that have only ever DRAWN. this fixes that
+        teams_who_tied = set()
+
         for index, row in seasonal_dataframes[year].iterrows():
             if(row['result'] == 0):
                 team_to_losses[row['team1']] = team_to_losses.get(row['team1'], 0) + 1
             if(row['result'] == 1):
                 team_to_wins[row['team1']] = team_to_wins.get(row['team1'], 0) + 1
+            if(row['result'] == 0.5):
+                teams_who_tied.add(row['team1'])
         
-        teams = set(team_to_wins.keys()).union(set(team_to_losses.keys()))
+        teams = (set(team_to_wins.keys()).union(set(team_to_losses.keys()))).union(teams_who_tied)
         for team in teams:
             to_append = {'season': year, 'team': team, 
                          'winrate': (team_to_wins.get(team, 0) + int(adjusted)) / 
@@ -207,3 +212,12 @@ def get_prediction_metric_accuracy(df, prob_column_name=None):
     to_return = df.copy()
     to_return['accuracy'] = correctness
     return to_return
+
+
+#nhl_data = pd.read_csv('../data/processed_data/nhl/generic_nhl_data_flipped.csv')
+#nba_data = pd.read_csv('../data/processed_data/nba/generic_nba_data_flipped.csv')
+#nfl_data = pd.read_csv('../data/processed_data/nfl_historical/generic_nfl_data_flipped.csv')
+
+#get_season_winrate(nhl_data).to_csv('nhl.csv', index=False)
+#get_season_winrate(nba_data).to_csv('nba.csv', index=False)
+#get_season_winrate(nfl_data).to_csv('nfl.csv', index=False)
