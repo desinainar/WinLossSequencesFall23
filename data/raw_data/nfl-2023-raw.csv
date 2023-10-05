@@ -31,38 +31,38 @@ Match Number,Round Number,Date,Location,Home Team,Away Team,Result
 19,2,18/09/2023 00:20,Gillette Stadium,New England Patriots,Miami Dolphins,17 - 24
 18,2,18/09/2023 23:15,Bank of America Stadium,Carolina Panthers,New Orleans Saints,17 - 20
 17,2,19/09/2023 00:15,Acrisure Stadium,Pittsburgh Steelers,Cleveland Browns,26 - 22
-48,3,22/09/2023 00:15,Levi's® Stadium,San Francisco 49ers,New York Giants,
-39,3,24/09/2023 17:00,M&T Bank Stadium,Baltimore Ravens,Indianapolis Colts,
-40,3,24/09/2023 17:00,Cleveland Browns Stadium,Cleveland Browns,Tennessee Titans,
-41,3,24/09/2023 17:00,Ford Field,Detroit Lions,Atlanta Falcons,
-42,3,24/09/2023 17:00,Lambeau Field,Green Bay Packers,New Orleans Saints,
-43,3,24/09/2023 17:00,EverBank Stadium,Jacksonville Jaguars,Houston Texans,
-44,3,24/09/2023 17:00,Hard Rock Stadium,Miami Dolphins,Denver Broncos,
-45,3,24/09/2023 17:00,U.S. Bank Stadium,Minnesota Vikings,Los Angeles Chargers,
-46,3,24/09/2023 17:00,MetLife Stadium,New York Jets,New England Patriots,
-47,3,24/09/2023 17:00,FedExField,Washington Commanders,Buffalo Bills,
-38,3,24/09/2023 20:05,Lumen Field,Seattle Seahawks,Carolina Panthers,
-36,3,24/09/2023 20:25,State Farm Stadium,Arizona Cardinals,Dallas Cowboys,
-37,3,24/09/2023 20:25,GEHA Field at Arrowhead Stadium,Kansas City Chiefs,Chicago Bears,
-35,3,25/09/2023 00:20,Allegiant Stadium,Las Vegas Raiders,Pittsburgh Steelers,
-34,3,25/09/2023 23:15,Raymond James Stadium,Tampa Bay Buccaneers,Philadelphia Eagles,
-33,3,26/09/2023 00:15,Paycor Stadium,Cincinnati Bengals,Los Angeles Rams,
-64,4,29/09/2023 00:15,Lambeau Field,Green Bay Packers,Detroit Lions,
-63,4,01/10/2023 13:30,Wembley Stadium,Jacksonville Jaguars,Atlanta Falcons,
-54,4,01/10/2023 17:00,Highmark Stadium,Buffalo Bills,Miami Dolphins,
-55,4,01/10/2023 17:00,Bank of America Stadium,Carolina Panthers,Minnesota Vikings,
-56,4,01/10/2023 17:00,Soldier Field,Chicago Bears,Denver Broncos,
-57,4,01/10/2023 17:00,Cleveland Browns Stadium,Cleveland Browns,Baltimore Ravens,
-58,4,01/10/2023 17:00,NRG Stadium,Houston Texans,Pittsburgh Steelers,
-59,4,01/10/2023 17:00,Lucas Oil Stadium,Indianapolis Colts,Los Angeles Rams,
-60,4,01/10/2023 17:00,Caesars Superdome,New Orleans Saints,Tampa Bay Buccaneers,
-61,4,01/10/2023 17:00,Lincoln Financial Field,Philadelphia Eagles,Washington Commanders,
-62,4,01/10/2023 17:00,Nissan Stadium,Tennessee Titans,Cincinnati Bengals,
-53,4,01/10/2023 20:05,SoFi Stadium,Los Angeles Chargers,Las Vegas Raiders,
-51,4,01/10/2023 20:25,AT&T Stadium,Dallas Cowboys,New England Patriots,
-52,4,01/10/2023 20:25,Levi's® Stadium,San Francisco 49ers,Arizona Cardinals,
-50,4,02/10/2023 00:20,MetLife Stadium,New York Jets,Kansas City Chiefs,
-49,4,03/10/2023 00:15,MetLife Stadium,New York Giants,Seattle Seahawks,
+48,3,22/09/2023 00:15,Levi's® Stadium,San Francisco 49ers,New York Giants,30 - 12
+39,3,24/09/2023 17:00,M&T Bank Stadium,Baltimore Ravens,Indianapolis Colts,19 - 22
+40,3,24/09/2023 17:00,Cleveland Browns Stadium,Cleveland Browns,Tennessee Titans,27 - 3
+41,3,24/09/2023 17:00,Ford Field,Detroit Lions,Atlanta Falcons,20 - 6
+42,3,24/09/2023 17:00,Lambeau Field,Green Bay Packers,New Orleans Saints,18 - 17
+43,3,24/09/2023 17:00,EverBank Stadium,Jacksonville Jaguars,Houston Texans,17 - 37
+44,3,24/09/2023 17:00,Hard Rock Stadium,Miami Dolphins,Denver Broncos,70 - 20
+45,3,24/09/2023 17:00,U.S. Bank Stadium,Minnesota Vikings,Los Angeles Chargers,24 - 28
+46,3,24/09/2023 17:00,MetLife Stadium,New York Jets,New England Patriots,10 - 15
+47,3,24/09/2023 17:00,FedExField,Washington Commanders,Buffalo Bills,3 - 37
+38,3,24/09/2023 20:05,Lumen Field,Seattle Seahawks,Carolina Panthers,37 - 27
+36,3,24/09/2023 20:25,State Farm Stadium,Arizona Cardinals,Dallas Cowboys,28 - 16
+37,3,24/09/2023 20:25,GEHA Field at Arrowhead Stadium,Kansas City Chiefs,Chicago Bears,41 - 10
+35,3,25/09/2023 00:20,Allegiant Stadium,Las Vegas Raiders,Pittsburgh Steelers,18 - 23
+34,3,25/09/2023 23:15,Raymond James Stadium,Tampa Bay Buccaneers,Philadelphia Eagles,11 - 25
+33,3,26/09/2023 00:15,Paycor Stadium,Cincinnati Bengals,Los Angeles Rams,19 - 16
+64,4,29/09/2023 00:15,Lambeau Field,Green Bay Packers,Detroit Lions,20 - 34
+63,4,01/10/2023 13:30,Wembley Stadium,Jacksonville Jaguars,Atlanta Falcons,23 - 7
+54,4,01/10/2023 17:00,Highmark Stadium,Buffalo Bills,Miami Dolphins,48 - 20
+55,4,01/10/2023 17:00,Bank of America Stadium,Carolina Panthers,Minnesota Vikings,13 - 21
+56,4,01/10/2023 17:00,Soldier Field,Chicago Bears,Denver Broncos,28 - 31
+57,4,01/10/2023 17:00,Cleveland Browns Stadium,Cleveland Browns,Baltimore Ravens,3 - 28
+58,4,01/10/2023 17:00,NRG Stadium,Houston Texans,Pittsburgh Steelers,30 - 6
+59,4,01/10/2023 17:00,Lucas Oil Stadium,Indianapolis Colts,Los Angeles Rams,23 - 29
+60,4,01/10/2023 17:00,Caesars Superdome,New Orleans Saints,Tampa Bay Buccaneers,9 - 26
+61,4,01/10/2023 17:00,Lincoln Financial Field,Philadelphia Eagles,Washington Commanders,34 - 31
+62,4,01/10/2023 17:00,Nissan Stadium,Tennessee Titans,Cincinnati Bengals,27 - 3
+53,4,01/10/2023 20:05,SoFi Stadium,Los Angeles Chargers,Las Vegas Raiders,24 - 17
+51,4,01/10/2023 20:25,AT&T Stadium,Dallas Cowboys,New England Patriots,38 - 3
+52,4,01/10/2023 20:25,Levi's® Stadium,San Francisco 49ers,Arizona Cardinals,35 - 16
+50,4,02/10/2023 00:20,MetLife Stadium,New York Jets,Kansas City Chiefs,20 - 23
+49,4,03/10/2023 00:15,MetLife Stadium,New York Giants,Seattle Seahawks,3 - 24
 78,5,06/10/2023 00:15,FedExField,Washington Commanders,Chicago Bears,
 77,5,08/10/2023 13:30,Tottenham Hotspur Stadium,Buffalo Bills,Jacksonville Jaguars,
 71,5,08/10/2023 17:00,Mercedes-Benz Stadium,Atlanta Falcons,Houston Texans,
@@ -86,10 +86,10 @@ Match Number,Round Number,Date,Location,Home Team,Away Team,Result
 88,6,15/10/2023 17:00,NRG Stadium,Houston Texans,New Orleans Saints,
 89,6,15/10/2023 17:00,EverBank Stadium,Jacksonville Jaguars,Indianapolis Colts,
 90,6,15/10/2023 17:00,Hard Rock Stadium,Miami Dolphins,Carolina Panthers,
-91,6,15/10/2023 17:00,Raymond James Stadium,Tampa Bay Buccaneers,Detroit Lions,
 83,6,15/10/2023 20:05,Allegiant Stadium,Las Vegas Raiders,New England Patriots,
 81,6,15/10/2023 20:25,SoFi Stadium,Los Angeles Rams,Arizona Cardinals,
 82,6,15/10/2023 20:25,MetLife Stadium,New York Jets,Philadelphia Eagles,
+91,6,15/10/2023 20:25,Raymond James Stadium,Tampa Bay Buccaneers,Detroit Lions,
 80,6,16/10/2023 00:20,Highmark Stadium,Buffalo Bills,New York Giants,
 79,6,17/10/2023 00:15,SoFi Stadium,Los Angeles Chargers,Dallas Cowboys,
 106,7,20/10/2023 00:15,Caesars Superdome,New Orleans Saints,Jacksonville Jaguars,
