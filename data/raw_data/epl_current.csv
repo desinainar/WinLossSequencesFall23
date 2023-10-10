@@ -69,16 +69,16 @@ Match Number,Round Number,Date,Location,Home Team,Away Team,Result
 68,7,30/09/2023 17:30,Tottenham Hotspur Stadium,Spurs,Liverpool,2 - 1
 67,7,01/10/2023 14:00,The City Ground,Nottingham Forest,Brentford,1 - 1
 64,7,02/10/2023 20:00,Craven Cottage,Fulham,Chelsea,0 - 2
-77,8,07/10/2023 12:30,Kenilworth Road,Luton,Spurs,
-73,8,07/10/2023 15:00,Turf Moor,Burnley,Chelsea,
-75,8,07/10/2023 15:00,Goodison Park,Everton,Bournemouth,
-76,8,07/10/2023 15:00,Craven Cottage,Fulham,Sheffield Utd,
-78,8,07/10/2023 15:00,Old Trafford,Man Utd,Brentford,
-74,8,07/10/2023 17:30,Selhurst Park,Crystal Palace,Nottingham Forest,
-72,8,08/10/2023 14:00,Amex Stadium,Brighton,Liverpool,
-79,8,08/10/2023 14:00,London Stadium,West Ham,Newcastle,
-80,8,08/10/2023 14:00,Molineux Stadium,Wolves,Aston Villa,
-71,8,08/10/2023 16:30,Emirates Stadium,Arsenal,Man City,
+77,8,07/10/2023 12:30,Kenilworth Road,Luton,Spurs,0 - 1
+73,8,07/10/2023 15:00,Turf Moor,Burnley,Chelsea,1 - 4
+75,8,07/10/2023 15:00,Goodison Park,Everton,Bournemouth,3 - 0
+76,8,07/10/2023 15:00,Craven Cottage,Fulham,Sheffield Utd,3 - 1
+78,8,07/10/2023 15:00,Old Trafford,Man Utd,Brentford,2 - 1
+74,8,07/10/2023 17:30,Selhurst Park,Crystal Palace,Nottingham Forest,0 - 0
+72,8,08/10/2023 14:00,Amex Stadium,Brighton,Liverpool,2 - 2
+79,8,08/10/2023 14:00,London Stadium,West Ham,Newcastle,2 - 2
+80,8,08/10/2023 14:00,Molineux Stadium,Wolves,Aston Villa,1 - 1
+71,8,08/10/2023 16:30,Emirates Stadium,Arsenal,Man City,1 - 0
 85,9,21/10/2023 12:30,Anfield,Liverpool,Everton,
 82,9,21/10/2023 15:00,Vitality Stadium,Bournemouth,Wolves,
 83,9,21/10/2023 15:00,Gtech Community Stadium,Brentford,Burnley,
