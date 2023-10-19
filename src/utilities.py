@@ -19,9 +19,12 @@ def get_flipped_data(df):
     # these lambda functions simply change location and result as expected (home becomes away, loss becomes win, etc.)
     flipped_data['location'] = flipped_data['location'].apply(lambda x: 'A' if x == 'H' else 'H' if x == 'A' else 'N')
     flipped_data['result'] = flipped_data['result'].apply(lambda x: 1.0 if x == 0.0 else 0.0 if x == 1.0 else 0.5)
+    
+    if 'elo_prob1' in flipped_data.columns:
+        flipped_data['elo_prob1'] = flipped_data['elo_prob1'].apply(lambda x: 1 - x)
 
     # order them as desired
-    flipped_data = flipped_data[['date', 'season', 'location', 'team1', 'team2', 'score1', 'score2', 'result']]
+    flipped_data = flipped_data[['date', 'season', 'location', 'team1', 'team2', 'score1', 'score2', 'result', 'elo_prob1']]
 
     return flipped_data
 
@@ -201,23 +204,14 @@ def get_prediction_metric_accuracy(df, prob_column_name=None):
 
     correctness = []
 
-    for index in df.index:
-        if(prob_column.iloc[:,0][index] > 0.5):
-            correctness.append(df['result'][index])
-        elif(prob_column.iloc[:,0][index] < 0.5):
-            correctness.append(abs(df['result'][index] - 1))
+    for index, row in df.iterrows():
+        if(prob_column.iat[index, 0] > 0.5):
+            correctness.append(float(row['result']))
+        elif(prob_column.iat[index, 0] < 0.5):
+            correctness.append(abs(float(row['result'] - 1)))
         else:
             correctness.append(0.5)
 
     to_return = df.copy()
     to_return['accuracy'] = correctness
     return to_return
-
-
-#nhl_data = pd.read_csv('../data/processed_data/nhl/generic_nhl_data_flipped.csv')
-#nba_data = pd.read_csv('../data/processed_data/nba/generic_nba_data_flipped.csv')
-#nfl_data = pd.read_csv('../data/processed_data/nfl_historical/generic_nfl_data_flipped.csv')
-
-#get_season_winrate(nhl_data).to_csv('nhl.csv', index=False)
-#get_season_winrate(nba_data).to_csv('nba.csv', index=False)
-#get_season_winrate(nfl_data).to_csv('nfl.csv', index=False)

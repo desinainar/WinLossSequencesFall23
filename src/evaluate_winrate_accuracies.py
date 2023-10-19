@@ -48,7 +48,6 @@ def get_foresight_prediction(df):
 
     return filtered_df
 
-
 def get_running_winrate_prediction(data, season):
     """
     uses running tally of winrate
