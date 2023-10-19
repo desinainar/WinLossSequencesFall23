@@ -139,7 +139,7 @@ def get_cumulative_winrate(df, season, team, date):
     filtered_data = get_filtered_data(df, seasons=season, teams=team)
     filtered_data = filtered_data.loc[filtered_data['date'] <= date]
     filtered_data = get_season_winrate(filtered_data)
-    date_column = [date]
+    date_column = [date] * len(filtered_data)
     filtered_data['date'] = date_column
     return filtered_data
 
