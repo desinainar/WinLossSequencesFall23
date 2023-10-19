@@ -24,7 +24,7 @@ def interpret_score_difference(result):
 # result: 1 if team1 wins, 0 if team2 wins, 0.5 if tie
 
 # open .csv into 'data' variable
-data = pd.read_csv('data/raw_data/nfl-2023-raw.csv')
+data = pd.read_csv('../data/raw_data/nfl-2023-raw.csv')
 
 # remove all games that haven't been played yet
 trimmed_data = data[data['Result'].notnull()]
@@ -72,4 +72,4 @@ trimmed_data.columns = trimmed_data.columns.str.lower()
 trimmed_data = get_flipped_data_appended(trimmed_data)
 
 # output to trimmed folder
-trimmed_data.to_csv('data/processed_data/nfl/nfl_current_trimmed.csv', index=False)
+trimmed_data.to_csv('output.csv', index=False)

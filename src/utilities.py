@@ -20,11 +20,9 @@ def get_flipped_data(df):
     flipped_data['location'] = flipped_data['location'].apply(lambda x: 'A' if x == 'H' else 'H' if x == 'A' else 'N')
     flipped_data['result'] = flipped_data['result'].apply(lambda x: 1.0 if x == 0.0 else 0.0 if x == 1.0 else 0.5)
     
-    if 'elo_prob1' in flipped_data.columns:
-        flipped_data['elo_prob1'] = flipped_data['elo_prob1'].apply(lambda x: 1 - x)
 
     # order them as desired
-    flipped_data = flipped_data[['date', 'season', 'location', 'team1', 'team2', 'score1', 'score2', 'result', 'elo_prob1']]
+    flipped_data = flipped_data[['date', 'season', 'location', 'team1', 'team2', 'score1', 'score2', 'result']]
 
     return flipped_data
 
@@ -38,7 +36,8 @@ def get_flipped_data_appended(df):
     
     Returns: a pandas dataframe with both original and flipped entries 
     """
-    return pd.concat([df, get_flipped_data(df)])
+    
+    return pd.concat([df, get_flipped_data(df)]).sort_values(by='date')
 
 
 def get_filtered_data(df, seasons=None, teams=None):
@@ -197,6 +196,7 @@ def get_prediction_metric_accuracy(df, prob_column_name=None):
     Returns: a dataframe with the same entries as df, with an extra "accuracy" column calculated and appended
     """
     # if no column name specified, assume it is last column
+
     if prob_column_name == None:
         prob_column = df.iloc[:,-1:]
     else:
@@ -205,9 +205,9 @@ def get_prediction_metric_accuracy(df, prob_column_name=None):
     correctness = []
 
     for index, row in df.iterrows():
-        if(prob_column.iat[index, 0] > 0.5):
+        if(prob_column[index] > 0.5):
             correctness.append(float(row['result']))
-        elif(prob_column.iat[index, 0] < 0.5):
+        elif(prob_column[index] < 0.5):
             correctness.append(abs(float(row['result'] - 1)))
         else:
             correctness.append(0.5)

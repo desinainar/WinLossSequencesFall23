@@ -69,8 +69,8 @@ def get_running_winrate_prediction(df, season):
     new_df['prob'] = prob_list
     indexDrop = new_df[ (new_df['prob'] < 0)].index
     new_df.drop(indexDrop , inplace=True)
-    #accuracy_df = utilities.get_prediction_metric_accuracy(new_df)
-    return new_df
+    accuracy_df = utilities.get_prediction_metric_accuracy(new_df, prob_column_name='prob')
+    return accuracy_df
     
 
 
@@ -158,4 +158,4 @@ def get_running_winrate_prediction(df, season):
 # print(nfl_foresight_accuracies['accuracy'].sum()/len(nfl_foresight_accuracies))
 # print()
 
-#get_running_winrate_prediction(epl_df, 2023).to_csv('output.csv', index=False)
+get_running_winrate_prediction(nfl_df, 2023).to_csv('output.csv', index=False)
