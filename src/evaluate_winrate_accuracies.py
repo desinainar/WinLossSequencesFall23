@@ -1,16 +1,17 @@
 import utilities
 import pandas as pd
 
-mlb_winrate_dataframe = pd.read_csv('..\data\processed_data\mlb\mlb_adjusted_winrates.csv').rename(columns={'team': 'team1'})
-nhl_winrate_dataframe = pd.read_csv('..\data\processed_data/nhl/nhl_adjusted_winrates.csv').rename(columns={'team': 'team1'})
-nfl_winrate_dataframe = pd.read_csv('..\data\processed_data/nfl_historical/nfl_adjusted_winrates.csv').rename(columns={'team': 'team1'})
-nba_winrate_dataframe = pd.read_csv('..\data\processed_data/nba/nba_adjusted_winrates.csv').rename(columns={'team': 'team1'})
+#mlb_winrate_dataframe = pd.read_csv('..\data\processed_data\mlb\mlb_adjusted_winrates.csv').rename(columns={'team': 'team1'})
+#nhl_winrate_dataframe = pd.read_csv('..\data\processed_data/nhl/nhl_adjusted_winrates.csv').rename(columns={'team': 'team1'})
+#nfl_winrate_dataframe = pd.read_csv('..\data\processed_data/nfl_historical/nfl_adjusted_winrates.csv').rename(columns={'team': 'team1'})
+#nba_winrate_dataframe = pd.read_csv('..\data\processed_data/nba/nba_adjusted_winrates.csv').rename(columns={'team': 'team1'})
 
 
-mlb_df = pd.read_csv('../data/processed_data/mlb/generic_mlb_data_flipped.csv')
-nhl_df = pd.read_csv('../data/processed_data/nhl/generic_nhl_data_flipped.csv')
-nfl_df = pd.read_csv('../data/processed_data/nfl_historical/generic_nfl_data_flipped.csv')
-nba_df = pd.read_csv('../data/processed_data/nba/generic_nba_data_flipped.csv')
+#mlb_df = pd.read_csv('../data/processed_data/mlb/generic_mlb_data_flipped.csv')
+#nhl_df = pd.read_csv('../data/processed_data/nhl/generic_nhl_data_flipped.csv')
+nfl_df = pd.read_csv('../data/processed_data/nfl_live/nfl_current_trimmed.csv')
+epl_df = pd.read_csv('../data/processed_data/epl_live/epl_current_trimmed.csv')
+#nba_df = pd.read_csv('../data/processed_data/nba/generic_nba_data_flipped.csv')
 
 team_season_pair_to_winrate = {}
 
@@ -48,16 +49,15 @@ def get_foresight_prediction(df):
 
     return filtered_df
 
-def get_running_winrate_prediction(data, season):
+def get_running_winrate_prediction(df, season):
     """
     uses running tally of winrate
     """
 
-    df = data.copy()
+    new_df = df.copy()
 
     prob_list = []
-
-    for ind in df.index:
+    for ind in df.index:        
         team1_winrate = utilities.get_cumulative_winrate(df, season, df['team1'][ind], str(pd.to_datetime(df['date'][ind]) + pd.Timedelta(days = -1)))
         team2_winrate = utilities.get_cumulative_winrate(df, season, df['team2'][ind], str(pd.to_datetime(df['date'][ind]) + pd.Timedelta(days = -1)))
         if not (team1_winrate.empty or team2_winrate.empty):
@@ -66,11 +66,15 @@ def get_running_winrate_prediction(data, season):
         else:
             prob_list.append(-1)
 
-    df['prob'] = prob_list
-    indexDrop = df[ (df['prob'] < 0)].index
-    df.drop(indexDrop , inplace=True)
-    accuracy_df = utilities.get_prediction_metric_accuracy(df)
-    print(accuracy_df['accuracy'].sum() / len(accuracy_df))
+    new_df['prob'] = prob_list
+    indexDrop = new_df[ (new_df['prob'] < 0)].index
+    new_df.drop(indexDrop , inplace=True)
+    #accuracy_df = utilities.get_prediction_metric_accuracy(new_df)
+    return new_df
+    
+
+
+
 
 
 # evaluate hindsight for MLB
@@ -154,4 +158,4 @@ def get_running_winrate_prediction(data, season):
 # print(nfl_foresight_accuracies['accuracy'].sum()/len(nfl_foresight_accuracies))
 # print()
 
-#get_running_winrate_prediction(nfl_df, 2022)
+#get_running_winrate_prediction(epl_df, 2023).to_csv('output.csv', index=False)
