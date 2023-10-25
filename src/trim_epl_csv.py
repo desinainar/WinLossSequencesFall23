@@ -66,5 +66,5 @@ trimmed_data.columns = trimmed_data.columns.str.lower()
 trimmed_data = get_flipped_data_appended(trimmed_data)
 
 # output to trimmed folder
-trimmed_data.to_csv('data/processed_data/epl/epl_current_trimmed.csv', index=False)
+trimmed_data.to_csv('data/processed_data/epl_live/epl_current_trimmed.csv', index=False)
 
