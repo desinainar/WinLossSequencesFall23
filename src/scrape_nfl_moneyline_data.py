@@ -1,3 +1,12 @@
+'''
+
+warning, this script will FOR SURE not work as well as you want it to
+im basically keeping it in the repo for archival purposes  
+
+
+'''
+
+
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
@@ -7,20 +16,25 @@ from io import StringIO
 # CBS considers Washington as "WAS" and Jacksonville as "JAC" which 538 disagree with
 name_changes = {'WSH': 'WAS', 'JAX': 'JAC'}
 
-data = pd.read_csv('testing.csv')
+data = pd.read_csv('data.csv')
+
+to_return = pd.DataFrame(columns=['date', 'team1', 'team2', 'moneyline1', 'moneyline2'])
 
 options = Options()
 options.add_argument("--headless")
 options.add_argument("--window-size=1920,1200")
+
+# this obviously only works for my specific laptop
 driver = webdriver.Chrome('C:/Users/leona/Documents/chromedriver/chromedriver', options=options)
 
 for index in data.index:
+
     
-    home_team = data['home'][index]
+    home_team = data['team1'][index]
     if(home_team in name_changes.keys()):
         home_team = name_changes[home_team]
 
-    away_team = data['away'][index]
+    away_team = data['team2'][index]
     if(away_team in name_changes.keys()):
         away_team = name_changes[away_team]
 
@@ -42,10 +56,23 @@ for index in data.index:
     driver.get(website)
 
     odds = driver.find_elements(By.CLASS_NAME, 'hud-odds')
-    with open('output.txt', 'a') as f:
-        f.write(url_date)
-        f.write(home_team + ": " + odds[0].text)
-        f.write(away_team + ": " + odds[2].text)
-        f.write('\n')
+
+    try:
+        to_return.loc[index] = [url_date, home_team, away_team, odds[0].text, odds[2].text]
+        to_return.to_csv("output.csv")
+    except:
+        with open('catch.txt', 'a') as f:
+            f.write(url_date)
+            f.write(home_team + ": " + odds[0].text)
+            f.write(away_team + ": " + odds[2].text)
+            f.write('\n')
+
+    # with open('output.txt', 'a') as f:
+    #     f.write(url_date)
+    #     f.write(home_team + ": " + odds[0].text)
+    #     f.write(away_team + ": " + odds[2].text)
+    #     f.write('\n')
+
+to_return.to_csv("output.csv")
 
 
