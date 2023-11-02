@@ -3,6 +3,13 @@ import numpy as np
 
 from utilities import *
 
+def interpret_score_difference(result):
+    diff = eval(result)
+    if(diff > 0):
+        return 1
+    if(diff < 0):
+        return 0
+    return 0.5
 
 
 nfl_df = pd.read_csv('data/processed_data/nfl_live/nfl_current_trimmed.csv')
@@ -21,7 +28,7 @@ for team in teams:
 #print(winrates)
 
 #get next week of unplayed games
-next_week = data[data['Round Number'] == 8]
+next_week = data[data['Round Number'] == 9]
 
 next_week.loc[next_week['Location'] != '0', 'Location'] = 'H'
 
@@ -55,7 +62,19 @@ next_week.columns = next_week.columns.str.lower()
 
 
 
-next_week.to_csv('data/processed_data/nfl_live/nfl_live_cumulative_accuracies.csv', index=False)
+next_week.to_csv('data/processed_data/nfl_live/nfl_live_predictions.csv', index=False)
+
+#prediction method accuracies for games that already happened
+accuracy_df = nfl_df
+accuracy_df['team1winrate'] = accuracy_df['team1']
+accuracy_df.replace({"team1winrate": winrates}, inplace = True)
+accuracy_df['team2winrate'] = accuracy_df['team2']
+accuracy_df.replace({"team2winrate": winrates}, inplace = True)
+
+accuracy_df['prediction'] = accuracy_df['team1winrate']/(accuracy_df['team1winrate'] + accuracy_df['team2winrate'])
+
+accuracy_df = get_prediction_metric_accuracy(accuracy_df, prob_column_name='prediction')
+accuracy_df.to_csv('data/processed_data/nfl_live/nfl_live_cumulative_accuracies.csv', index=False)
 
 
 
