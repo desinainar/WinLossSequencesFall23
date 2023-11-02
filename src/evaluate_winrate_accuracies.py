@@ -81,7 +81,7 @@ def get_running_winrate_prediction(df, season):
 # team_season_pair_to_winrate = {}
 # initialize_dictionary(mlb_winrate_dataframe, team_season_pair_to_winrate)
 # winrate_df = get_hindsight_prediction(mlb_df)
-# prediction_df = utilities.get_prediction_metric_accuracy(winrate_df)
+# prediction_df = u tilities.get_prediction_metric_accuracy(winrate_df)
 # utilities.get_filtered_data(prediction_df, seasons=list(range(1800, 2023))).to_csv('mlb_output.csv', index=False)
 
 # evaluate hindsight for NHL
