@@ -19,3 +19,7 @@ Functions:
 3. provide graph(box graph, line graph, etc.) to visualize the data
 
 For example, if there are 3 teams A,B,C, there are 3 matchs, and the game season has 2^3 = 8 outcomes.
+
+
+---
+6： simulation - > winning rate -> upset
