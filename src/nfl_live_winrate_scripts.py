@@ -12,6 +12,7 @@ def interpret_score_difference(result):
     return 0.5
 
 
+
 nfl_df = pd.read_csv('data/processed_data/nfl_live/nfl_current_trimmed.csv')
 data = pd.read_csv('data/raw_data/nfl-2023-raw.csv')
 
@@ -22,7 +23,7 @@ teams = list(set(teams))
 
 winrates = {}
 for team in teams:
-    nfl_winrate_sequence = get_cumulative_winrate_sequence(nfl_df, 2023, team, '2023-10-25')
+    nfl_winrate_sequence = get_cumulative_winrate_sequence(nfl_df, 2023, team, '2023-11-02')
     curr_winrate = nfl_winrate_sequence['winrate'].iloc[-1]
     winrates[team] = round(curr_winrate, 3)
 #print(winrates)
