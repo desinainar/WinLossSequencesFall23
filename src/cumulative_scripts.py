@@ -73,6 +73,7 @@ def weekly_winrate_prediction_accuracy (week_num, data, df, teams):
 
 nfl_correct_prediction = []
 epl_correct_prediction = []
+epl_no_draws = []
 
 for i in range(1, 9, 1):
     week = weekly_winrate_prediction_accuracy(i, nfl_raw_data, nfl_df, nfl_teams)
@@ -80,16 +81,17 @@ for i in range(1, 9, 1):
     nfl_cumulative = pd.concat([nfl_cumulative, week] , axis=0)
 
 nfl_cumulative.to_csv('data/processed_data/nfl_live/nfl_cumulative_testing.csv', index=False)
-print(nfl_correct_prediction)
 
 for j in range(1, 11, 1):
     week = weekly_winrate_prediction_accuracy(j, epl_raw_data, epl_df, epl_teams)
+    week_no_draws = week[week['accuracy'] != 0.5]
     epl_correct_prediction.append(sum(week['accuracy']) / len(week['accuracy']))
+    epl_no_draws.append(sum(week_no_draws['accuracy']) / len(week_no_draws['accuracy']))
     epl_cumulative = pd.concat([epl_cumulative, week] , axis=0)
 
 epl_cumulative.to_csv('data/processed_data/epl_live/epl_cumulative_testing.csv', index=False)
-print(epl_correct_prediction)
-
+#print(epl_correct_prediction)
+print(epl_no_draws)
 
   
 # define data values 
@@ -97,15 +99,21 @@ x = np.array([1, 2, 3, 4, 5, 6, 7, 8])  # X-axis points
 y = nfl_correct_prediction  # Y-axis points
 
 x2 = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+x3 = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
 y2 = epl_correct_prediction
+y3 = epl_no_draws
   
 plt.plot(x, y, label = "NFL")
 plt.plot(x2, y2, label = "EPL") 
+plt.plot(x3, y3, label = "EPL (Draws Excluded)") 
 plt.xlabel("Week")  # add X-axis label 
 plt.ylabel("Prediction Accuracy")  # add Y-axis label 
 plt.title("Weekly Accuracy")  # add title
-plt.ylim(0, 1) 
+plt.ylim(0, 1.1) 
+plt.legend()
 plt.show()
+
+
 
 
 
