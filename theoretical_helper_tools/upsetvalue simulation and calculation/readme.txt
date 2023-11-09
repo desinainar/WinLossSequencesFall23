@@ -23,3 +23,12 @@ For example, if there are 3 teams A,B,C, there are 3 matchs, and the game season
 
 ---
 6： simulation - > winning rate -> upset
+
+---
+for version x.y, x means primary version, y means sub-version
+
+essential modification: version 8 has changed the method of calculating upset value
+---
+output.txt is the output of information matrix from version 8.1
+
+8.1 version is the best and stable and lastest one
