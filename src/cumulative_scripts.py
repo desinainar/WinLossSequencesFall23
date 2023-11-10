@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt 
 
 from utilities import *
+from colley_ratings import *
 
 def interpret_score_difference(result):
     diff = eval(result)
