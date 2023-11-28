@@ -10,9 +10,9 @@ nfl_raw_data = pd.read_csv('data/raw_data/nfl-2023-raw.csv')
 epl_df = pd.read_csv('data/processed_data/epl_live/epl_current_trimmed.csv')
 epl_raw_data = pd.read_csv('data/raw_data/epl_current.csv')
 
-def colley_predictions (week_num, data, df):
-    colley = pb.ratings.Colley(df["score1"], df["score2"], df["team1"], df["team2"])
-    ratings = colley.get_ratings() 
+def massey_predictions (week_num, data, df):
+    massey = pb.ratings.Massey(df["score1"], df["score2"], df["team1"], df["team2"])
+    ratings = massey.get_ratings() 
     ratings = ratings.set_index('team').to_dict()['rating']
 
     curr_dates = data.loc[data['Round Number'] == week_num]
@@ -26,43 +26,43 @@ def colley_predictions (week_num, data, df):
     week = df.loc[df['date'] <= max_date]
     week = week.loc[week['date'] >= min_date]
 
-    week['team1_colleyrating'] = week['team1']
-    week.replace({"team1_colleyrating": ratings}, inplace = True)
-    week['team2_colleyrating'] = week['team2']
-    week.replace({"team2_colleyrating": ratings}, inplace = True)
+    week['team1_masseyrating'] = week['team1']
+    week.replace({"team1_masseyrating": ratings}, inplace = True)
+    week['team2_masseyrating'] = week['team2']
+    week.replace({"team2_masseyrating": ratings}, inplace = True)
 
-    week['prediction'] = np.where((week['team1_colleyrating'] > week['team2_colleyrating']), 1, 0)
-    week = week[['date', 'season', 'location', 'team1', 'team2', 'team1_colleyrating', 'team2_colleyrating', 'result', 'prediction']]
+    week['prediction'] = np.where((week['team1_masseyrating'] > week['team2_masseyrating']), 1, 0)
+    week = week[['date', 'season', 'location', 'team1', 'team2', 'team1_masseyrating', 'team2_masseyrating', 'result', 'prediction']]
     week = get_prediction_metric_accuracy(week, prob_column_name='prediction')
 
     return week
 
-nfl_cumulative = pd.DataFrame(columns=['date', 'season', 'location', 'team1', 'team2', 'team1_colleyrating', 'team2_colleyrating', 'result', 'prediction'])
+nfl_cumulative = pd.DataFrame(columns=['date', 'season', 'location', 'team1', 'team2', 'team1_masseyrating', 'team2_masseyrating', 'result', 'prediction'])
 nfl_correct_prediction = []
 
-epl_cumulative = pd.DataFrame(columns=['date', 'season', 'location', 'team1', 'team2', 'team1_colleyrating', 'team2_colleyrating', 'result', 'prediction'])
+epl_cumulative = pd.DataFrame(columns=['date', 'season', 'location', 'team1', 'team2', 'team1_masseyrating', 'team2_masseyrating', 'result', 'prediction'])
 epl_correct_prediction = []
 
 for i in range(1, 9, 1):
-    week = colley_predictions(i, nfl_raw_data, nfl_df)
+    week = massey_predictions(i, nfl_raw_data, nfl_df)
     nfl_correct_prediction.append(sum(week['accuracy']) / len(week['accuracy']))
     nfl_cumulative = pd.concat([nfl_cumulative, week] , axis=0)
 
-nfl_cumulative.to_csv('data/processed_data/nfl_live/nfl_colley.csv', index=False)
+nfl_cumulative.to_csv('data/processed_data/nfl_live/nfl_massey.csv', index=False)
 
-nfl_colley = pb.ratings.Colley(nfl_df["score1"], nfl_df["score2"], nfl_df["team1"], nfl_df["team2"])
-nfl_ratings = nfl_colley.get_ratings() 	
+nfl_massey = pb.ratings.Massey(nfl_df["score1"], nfl_df["score2"], nfl_df["team1"], nfl_df["team2"])
+nfl_ratings = nfl_massey.get_ratings() 	
 print(nfl_ratings)
 
 for i in range(1, 11, 1):
-    week = colley_predictions(i, epl_raw_data, epl_df)
+    week = massey_predictions(i, epl_raw_data, epl_df)
     epl_correct_prediction.append(sum(week['accuracy']) / len(week['accuracy']))
     epl_cumulative = pd.concat([epl_cumulative, week] , axis=0)
 
-epl_cumulative.to_csv('data/processed_data/epl_live/epl_colley.csv', index=False)
+epl_cumulative.to_csv('data/processed_data/epl_live/epl_massey.csv', index=False)
 
-epl_colley = pb.ratings.Colley(epl_df["score1"], epl_df["score2"], epl_df["team1"], epl_df["team2"])
-epl_ratings = epl_colley.get_ratings() 	
+epl_massey = pb.ratings.Massey(epl_df["score1"], epl_df["score2"], epl_df["team1"], epl_df["team2"])
+epl_ratings = epl_massey.get_ratings() 	
 print(epl_ratings)
 
 
@@ -76,7 +76,7 @@ plt.plot(x, y, label = "NFL")
 plt.plot(x2, y2, label = "EPL") 
 plt.xlabel("Week")  # add X-axis label 
 plt.ylabel("Prediction Accuracy")  # add Y-axis label 
-plt.title("Weekly Accuracy (Colley)")  # add title
+plt.title("Weekly Accuracy (Massey)")  # add title
 plt.ylim(0, 1.1) 
 plt.legend()
 plt.show()
